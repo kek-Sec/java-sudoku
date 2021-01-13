@@ -1,0 +1,21 @@
+package Game;
+
+import Levels.LevelsUtilities;
+
+public class GameController {
+
+		
+	
+	public static void main(String[] args) {
+		SudokuFrame sf = new SudokuFrame();
+		
+	}
+	private static void make()
+	{
+		PuzzleGenerator sudoku = new PuzzleGenerator();
+        sudoku.makePuzzle(sudoku.puzzle, 0);
+
+	}
+	
+
+}

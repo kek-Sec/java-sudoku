@@ -1,5 +1,8 @@
 package Interfaces;
 
-public class BoardInterface {
+interface BoardInterface {
 
+	
+	
+	
 }

@@ -1,0 +1,5 @@
+package SudokuGenerator;
+
+public class MenuButtonsListener {
+
+}

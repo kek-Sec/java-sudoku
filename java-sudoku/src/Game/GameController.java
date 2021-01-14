@@ -5,8 +5,7 @@ public class GameController {
 		
 	
 	public static void main(String[] args) {
-		SudokuFrame sf = new SudokuFrame();
-		
+		SudokuGrid sk = new SudokuGrid(3,3,3,3);
 	}
 	
 

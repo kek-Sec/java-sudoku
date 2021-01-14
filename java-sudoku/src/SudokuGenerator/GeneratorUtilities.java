@@ -8,7 +8,7 @@ public class GeneratorUtilities {
 	//create list of unique numbers
 	/*
 	 * @param limit the max number
-	 * @param how_many the ammount of numbers
+	 * @param how_many the amount of numbers
 	 */
 	@SuppressWarnings("deprecation")
 	public static int[] getUniqueRandomNumbers(int limit,int how_many)
@@ -23,6 +23,12 @@ public class GeneratorUtilities {
         	to_return[i] = list.get(i);
         }
 		return to_return;
+		
+	}
+	
+	public static int[][] makeRows()
+	{
+		return null;
 		
 	}
 }

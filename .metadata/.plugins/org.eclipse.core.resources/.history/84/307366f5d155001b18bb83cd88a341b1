@@ -1,0 +1,13 @@
+package Levels;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class LevelsUtilities {
+
+	//get unique random numbers in range
+	//used to fill sudoku on new game
+	@SuppressWarnings("deprecation")
+	
+	
+}

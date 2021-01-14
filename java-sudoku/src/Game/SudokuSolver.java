@@ -81,7 +81,7 @@ public class SudokuSolver implements SolverInterface{
 	@Override
 	public boolean checkSquares(int[][] squares_array) {
 
-		int[] wanted = new int[square_length];
+		int[] wanted = new int[square_length + 1];
 		
 		for(int i=0;i<total_squares;i++)
 		{

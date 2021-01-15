@@ -177,12 +177,10 @@ public class SudokuGrid {
         public int ROWS = inner_rows;
         public int COLUMNS = inner_cols;
         public String text;
-        private int[] random_numbers;
 
 
         public SubBoard() {
             
-        	random_numbers = GeneratorUtilities.getUniqueRandomNumbers(10, 9);
             setLayout(new GridLayout(ROWS, COLUMNS, 2, 2));
             fields = new JTextField[ROWS * COLUMNS];
             
@@ -197,7 +195,7 @@ public class SudokuGrid {
                     
                     fields[index] = field;
                     
-                    text = String.valueOf(random_numbers[index]);
+                    text = String.valueOf(GeneratorUtilities.getUniqueRandomNumbers(10, 1));
                     field.setText(text);
 //                    field.setText(Integer.toString(index));
                     add(field);

@@ -6,17 +6,24 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="println"/>
+		<item key="selection" value="vertical_squares"/>
 		<list key="findhistory">
+			<item value="outer_cols"/>
+			<item value="outer_rows"/>
+			<item value="visible"/>
+			<item value="&#x09;&#x09;int[] wanted = new int[square_length];"/>
 			<item value="println"/>
 			<item value="public"/>
 		</list>
 		<list key="replacehistory">
+			<item value="vertical_squares"/>
+			<item value="horizontal_squares"/>
+			<item value="&#x09;&#x09;int[] wanted = new int[square_length + 1];"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="513"/>
-		<item key="DIALOG_Y_ORIGIN" value="81"/>
+		<item key="DIALOG_X_ORIGIN" value="934"/>
+		<item key="DIALOG_Y_ORIGIN" value="152"/>
 		<item key="DIALOG_WIDTH" value="347"/>
 		<item key="DIALOG_HEIGHT" value="427"/>
 		<item key="DIALOG_FONT_NAME" value="1|Cantarell|10.0|0|GTK|1|"/>

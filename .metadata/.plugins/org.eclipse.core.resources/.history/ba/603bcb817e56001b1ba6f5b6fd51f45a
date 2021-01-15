@@ -21,15 +21,6 @@ import javax.swing.border.LineBorder;
 
 public class SudokuGrid {
 
-	//indexes for the square array
-	public int sqr_indx1 = 0;
-	public int sqr_indx2 = 0;
-	
-	//Array containing each square and its contents
-	public int[][] squares_arr;
-	
-	//Array of subBoards - contains individual arrays of JTextField
-	public SubBoard[] subBoards;
 	//Menu buttons action listener
 	public MenuButtonsListener mbl;
 	
@@ -53,11 +44,6 @@ public class SudokuGrid {
         this.vertical_squares = vertical_squares;
         this.inner_rows = inner_rows;
         this.inner_cols = inner_cols;
-        
-        //max index value for squares_arr
-        int max = inner_rows * inner_cols;
-        
-        squares_arr = new int[max][max];
         
         //invoke swing runnable
     	EventQueue.invokeLater(new Runnable() {
@@ -92,7 +78,6 @@ public class SudokuGrid {
         		
         		//show frame
                 frame.setVisible(true);
-                
             }
         });
     }
@@ -123,7 +108,7 @@ public class SudokuGrid {
             JButton history_button = new JButton("History");
             
             //initialize menu button listener 
-            mbl = new MenuButtonsListener(solve_button,newGame_button,hint_button,reset_button,history_button,squares_arr);
+            mbl = new MenuButtonsListener(solve_button,newGame_button,hint_button,reset_button,history_button,fields);
            
             //Add event listeners
             solve_button.addActionListener(mbl);
@@ -153,6 +138,7 @@ public class SudokuGrid {
         public int ROWS = horizontal_squares;
         public int COLUMNS = vertical_squares;
 
+        public SubBoard[] subBoards;
 
         public SudokuBoard() {
             setBorder(new EmptyBorder(4, 4, 4, 4));
@@ -176,40 +162,23 @@ public class SudokuGrid {
     	
         public int ROWS = inner_rows;
         public int COLUMNS = inner_cols;
-        public String text;
 
 
         public SubBoard() {
-            
             setLayout(new GridLayout(ROWS, COLUMNS, 2, 2));
             fields = new JTextField[ROWS * COLUMNS];
-            
             for (int row = 0; row < ROWS; row++) {
                 for (int col = 0; col < COLUMNS; col++) {
-                	
                     int index = (row * COLUMNS) + col;
-                    
                     JTextField field = new JTextField(4);
                     field.setHorizontalAlignment(JTextField.CENTER);
                     field.setFont(font1);
-                    
                     fields[index] = field;
-                    
-                    text = String.valueOf(index+1);
-                    field.setText(text);
-                    
-                    //check sqr_indx2 overflow
-                    int max = (ROWS * COLUMNS) - 1;
-                    if(sqr_indx2 == max) {sqr_indx2 = 0; }
-                    
-                    squares_arr[sqr_indx1][sqr_indx2] = index+1;
-                    
-                    sqr_indx2++;
+                    field.setText(String.valueOf(index));
 //                    field.setText(Integer.toString(index));
                     add(field);
                 }
             }
-            sqr_indx1++;
         }
     }
 }

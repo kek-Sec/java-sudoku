@@ -3,6 +3,8 @@ package SudokuGenerator;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import javax.swing.JTextField;
+
 public class GeneratorUtilities {
 	
 	//create list of unique numbers
@@ -20,16 +22,31 @@ public class GeneratorUtilities {
         }
         Collections.shuffle(list);
         for (int i=0; i<how_many; i++) {
-        	//System.out.println(list.get(i));
         	to_return[i] = list.get(i);
         }
 		return to_return;
 		
 	}
 	
-	public static int[][] makeRows()
+	//create Rows array
+	public static int[][] makeRows(JTextField[] arr,int row_length)
 	{
-		return null;
+		//row[][] to return
+		int result[][] = new int[arr.length][arr.length];
+		
+		int c = 0;
+		int c2 = 0;
+		while(c < arr.length)
+		{
+			for(int i=0;i<row_length;i++)
+			{
+				if(arr[i] == null) {break;}
+				result[c][i] = Integer.parseInt(arr[i].getText());
+				c++;
+			}
+			c2++;
+		}
+		return result;
 		
 	}
 }

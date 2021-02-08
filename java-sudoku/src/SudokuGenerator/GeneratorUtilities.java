@@ -1,6 +1,7 @@
 package SudokuGenerator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 public class GeneratorUtilities {
@@ -27,9 +28,12 @@ public class GeneratorUtilities {
 		
 	}
 	
-	public static int[][] makeRows()
+	/*
+	 * @param arr ->  array
+	 * @param to_check -> int to check if exists
+	 */
+	public static boolean ExistsInArr(int[] arr,int to_check)
 	{
-		return null;
-		
+		return Arrays.stream(arr).anyMatch(i -> i == to_check);
 	}
 }

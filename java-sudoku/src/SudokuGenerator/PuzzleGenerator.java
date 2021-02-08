@@ -24,7 +24,7 @@ public class PuzzleGenerator {
 
 	}
 	
-	public void generate3x3()
+	public void generate9x9()
 	{
 		int random;
 		rows_array = new int[9][9];

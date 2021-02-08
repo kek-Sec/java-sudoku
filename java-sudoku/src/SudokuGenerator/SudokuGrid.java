@@ -19,8 +19,12 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import Listeners.MenuButtonsListener;
+
 public class SudokuGrid {
 
+	public int[][] rows_array,cols_array;
+	
 	//indexes for the square array
 	public int sqr_indx1 = 0;
 	public int sqr_indx2 = 0;
@@ -58,6 +62,10 @@ public class SudokuGrid {
         int max = inner_rows * inner_cols;
         
         squares_arr = new int[max][max];
+        
+        //initialize rows and columns array
+        this.rows_array = new int[max][max];
+        this.cols_array = new int[max][max];
         
         //invoke swing runnable
     	EventQueue.invokeLater(new Runnable() {
@@ -153,7 +161,6 @@ public class SudokuGrid {
         public int ROWS = horizontal_squares;
         public int COLUMNS = vertical_squares;
 
-
         public SudokuBoard() {
             setBorder(new EmptyBorder(4, 4, 4, 4));
             subBoards = new SubBoard[ROWS * COLUMNS];
@@ -162,6 +169,9 @@ public class SudokuGrid {
                 for (int col = 0; col < COLUMNS; col++) {
                     int index = (row * ROWS) + col;
                     SubBoard board = new SubBoard();
+                    
+                    //System.out.println("generating board -> " + index);
+                    
                     board.setBorder(new CompoundBorder(new LineBorder(Color.GRAY, 3), new EmptyBorder(4, 4, 4, 4)));
                     subBoards[index] = board;
                     add(board);
@@ -182,7 +192,11 @@ public class SudokuGrid {
 
         public SubBoard() {
             
+        	
+        	
+        	//get unique random numbers
         	random_numbers = GeneratorUtilities.getUniqueRandomNumbers(10, 9);
+        	
             setLayout(new GridLayout(ROWS, COLUMNS, 2, 2));
             fields = new JTextField[ROWS * COLUMNS];
             
@@ -196,8 +210,9 @@ public class SudokuGrid {
                     field.setFont(font1);
                     
                     fields[index] = field;
-                    
+                    //text = "1";
                     text = String.valueOf(random_numbers[index]);
+                    random_numbers[index] = 0;
                     field.setText(text);
 //                    field.setText(Integer.toString(index));
                     add(field);

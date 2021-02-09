@@ -22,15 +22,12 @@ import javax.swing.border.LineBorder;
 import Listeners.MenuButtonsListener;
 
 public class SudokuGrid {
-
+	
+	//rows and columns array
 	public int[][] rows_array,cols_array;
-	
-	//indexes for the square array
-	public int sqr_indx1 = 0;
-	public int sqr_indx2 = 0;
-	
-	//Array containing each square and its contents
-	public int[][] squares_arr;
+
+	//array containing each square
+	public int[][] squares_array;
 	
 	//Array of subBoards - contains individual arrays of JTextField
 	public SubBoard[] subBoards;
@@ -58,10 +55,11 @@ public class SudokuGrid {
         this.inner_rows = inner_rows;
         this.inner_cols = inner_cols;
         
-        //max index value for squares_arr
+        //max index 
         int max = inner_rows * inner_cols;
         
-        squares_arr = new int[max][max];
+        //initialize squares array
+        this.squares_array = new int[max][max];
         
         //initialize rows and columns array
         this.rows_array = new int[max][max];
@@ -168,9 +166,10 @@ public class SudokuGrid {
             for (int row = 0; row < ROWS; row++) {
                 for (int col = 0; col < COLUMNS; col++) {
                     int index = (row * ROWS) + col;
-                    SubBoard board = new SubBoard();
-                    
-                    //System.out.println("generating board -> " + index);
+                    SubBoard board = new SubBoard(index);
+                    GeneratorUtilities.Print2dArray(squares_array);
+
+                    System.out.println("generating board -> " + index);
                     
                     board.setBorder(new CompoundBorder(new LineBorder(Color.GRAY, 3), new EmptyBorder(4, 4, 4, 4)));
                     subBoards[index] = board;
@@ -188,11 +187,12 @@ public class SudokuGrid {
         public int COLUMNS = inner_cols;
         public String text;
         private int[] random_numbers;
-
-
-        public SubBoard() {
+        private int square_counter;
+        
+        public SubBoard(int indx) {
             
-        	
+        	//initialize square counter
+        	square_counter = 0;
         	
         	//get unique random numbers
         	random_numbers = GeneratorUtilities.getUniqueRandomNumbers(10, 9);
@@ -209,16 +209,23 @@ public class SudokuGrid {
                     field.setHorizontalAlignment(JTextField.CENTER);
                     field.setFont(font1);
                     
+                    
+                    
                     fields[index] = field;
                     //text = "1";
-                    text = String.valueOf(random_numbers[index]);
+                    //text = String.valueOf(random_numbers[index]);
+                    text = String.valueOf(index);
+                    
+                    //add data to squares_array
+                    squares_array[indx][square_counter] = index;
+                    square_counter++;
+                    
                     random_numbers[index] = 0;
                     field.setText(text);
 //                    field.setText(Integer.toString(index));
                     add(field);
                 }
             }
-            sqr_indx1++;
         }
     }
 }

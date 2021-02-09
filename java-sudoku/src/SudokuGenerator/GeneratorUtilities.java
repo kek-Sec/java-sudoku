@@ -36,4 +36,14 @@ public class GeneratorUtilities {
 	{
 		return Arrays.stream(arr).anyMatch(i -> i == to_check);
 	}
+	
+	/*
+	 * for debug use
+	 * prints whole array and its contents
+	 * @param arr -> array to print
+	 */
+	public static void Print2dArray(int[][] arr)
+	{
+		System.out.println(Arrays.deepToString(arr));
+	}
 }

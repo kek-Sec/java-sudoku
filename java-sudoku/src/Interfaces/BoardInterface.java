@@ -2,7 +2,4 @@ package Interfaces;
 
 interface BoardInterface {
 
-	
-	
-	
 }

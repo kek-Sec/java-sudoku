@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,8 +24,8 @@ import Listeners.MenuButtonsListener;
 
 public class SudokuGrid {
 	
-	//rows and columns array
-	public int[][] rows_array,cols_array;
+	//row array
+	public int[][] rows_array;
 
 	//array containing each square
 	public int[][] squares_array;
@@ -58,13 +59,18 @@ public class SudokuGrid {
         //max index 
         int max = inner_rows * inner_cols;
         
-        //initialize squares array
-        this.squares_array = new int[max][max];
-        
+
+       
         //initialize rows and columns array
         this.rows_array = new int[max][max];
-        this.cols_array = new int[max][max];
+        this.rows_array = PuzzleGenerator.init();
         
+        //initialize squares array
+        this.squares_array = new int[max][max];
+        this.squares_array = PuzzleGenerator.createSquaresArray();
+        
+        System.out.println(Arrays.deepToString(this.squares_array));
+
         //invoke swing runnable
     	EventQueue.invokeLater(new Runnable() {
             @Override
@@ -187,11 +193,11 @@ public class SudokuGrid {
         public int ROWS = inner_rows;
         public int COLUMNS = inner_cols;
         public String text;
-        private int[] random_numbers;
         private int square_counter;
         
         public SubBoard(int indx) {
-            
+
+        	
         	//initialize square counter
         	square_counter = 0;
         	
@@ -211,11 +217,8 @@ public class SudokuGrid {
                     
                     fields[index] = field;
                     //text = "1";
-                    text = String.valueOf(index);
+                    text = String.valueOf(squares_array[indx][index]);
                     
-                    //add data to squares_array
-                    squares_array[indx][square_counter] = index;
-                    square_counter++;
                     
                     field.setText(text);
 //                    field.setText(Integer.toString(index));

@@ -4,15 +4,15 @@ import java.lang.*;
   
 public class PuzzleGenerator 
 { 
-    int[][] mat; //contains puzzle
-    int N; // number of columns/rows. 
+    static int[][] mat; //contains puzzle
+    static int N; // number of columns/rows. 
     int SRN; // square root of N 
     int K; // No. Of hidden digits 
   
     // Constructor 
     PuzzleGenerator(int N, int K) 
     { 
-        this.N = N; 
+        PuzzleGenerator.N = N; 
         this.K = K; 
   
         // Compute square root of N 
@@ -197,13 +197,57 @@ public class PuzzleGenerator
         } 
         System.out.println(); 
     } 
+    
+    public static int[][] createSquaresArray()
+    {
+    	int[][] to_return = new int[N][N];
+    	int current_square = 0;
+    	int i = 0;
+    	int a = 0;
+    	int b = 0;
+    	int c = 3;
+    	int d = 3;
+    	int diff;
+    	
+    	
+    	while(current_square != 9)
+    		{
+    		a = c - 3;
+    		i = 0;
+    		while(a < c) {
+    			b = d -3;
+    			while (b< d)
+    			{
+    				System.out.println("a -> " + a + " b -> " + b);
+    				to_return[current_square][i] = mat[a][b];
+    				i++;
+    				b++;
+    			}
+    			a++;
+    		}
+    		if(d >= 9)
+    		{
+    			d = 3;
+    			c = c + 3;
+    		}
+    		else if(d < 9)
+    		{
+    			d = d +3;
+    		}
+    		
+    		current_square++;
+    	}
+    	
+    	return to_return;
+    }
   
-    public static void init()
+    public static int[][] init()
     {
         int N = 9, K = 20; 
         PuzzleGenerator puzzleGenerator = new PuzzleGenerator(N, K); 
         puzzleGenerator.fillValues(); 
         puzzleGenerator.printSudoku(); 
+        return mat;
     }
     
 } 

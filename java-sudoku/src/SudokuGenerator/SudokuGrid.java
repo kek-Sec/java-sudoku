@@ -59,7 +59,6 @@ public class SudokuGrid {
         //max index 
         int max = inner_rows * inner_cols;
         
-
        
         //initialize rows and columns array
         this.rows_array = new int[max][max];
@@ -172,11 +171,15 @@ public class SudokuGrid {
             for (int row = 0; row < ROWS; row++) {
                 for (int col = 0; col < COLUMNS; col++) {
                     int index = (row * ROWS) + col;
-                    System.out.println("row -> " + row + " col -> " + col);
+                    
                     SubBoard board = new SubBoard(index);
-          
 
-                    //System.out.println("generating board -> " + index);
+                    if(Debug_Controller.enabled())
+                    {
+                        System.out.println("row -> " + row + " col -> " + col);
+                        System.out.println("generating board -> " + index);
+                    }
+ 
                     
                     board.setBorder(new CompoundBorder(new LineBorder(Color.GRAY, 3), new EmptyBorder(4, 4, 4, 4)));
                     subBoards[index] = board;

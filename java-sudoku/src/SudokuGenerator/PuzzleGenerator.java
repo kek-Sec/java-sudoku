@@ -207,7 +207,6 @@ public class PuzzleGenerator
     	int b = 0;
     	int c = 3;
     	int d = 3;
-    	int diff;
     	
     	
     	while(current_square != 9)
@@ -218,7 +217,12 @@ public class PuzzleGenerator
     			b = d -3;
     			while (b< d)
     			{
-    				System.out.println("a -> " + a + " b -> " + b);
+                    if(Debug_Controller.enabled())
+                    {
+                    	System.out.println("a -> " + a + " b -> " + b);
+                    }
+    		
+    				
     				to_return[current_square][i] = mat[a][b];
     				i++;
     				b++;

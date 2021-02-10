@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
+import SudokuGenerator.Debug_Controller;
+
 public class MenuButtonsListener implements ActionListener{
 	
 	//buttons that we are gonna listen for
@@ -26,23 +28,38 @@ public class MenuButtonsListener implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == solve_button)
 		{
-		
+			if(Debug_Controller.enabled())
+			{
+				System.out.println("Clicked -> solve");
+			}
 		}
 		else if(e.getSource() == newGame_button)
 		{
-			
+			if(Debug_Controller.enabled())
+			{
+				System.out.println("Clicked -> new Game");
+			}
 		}
 		else if(e.getSource() == hint_button)
 		{
-			
+			if(Debug_Controller.enabled())
+			{
+				System.out.println("Clicked -> hint");
+			}
 		}
 		else if(e.getSource() == reset_button)
 		{
-			
+			if(Debug_Controller.enabled())
+			{
+				System.out.println("Clicked -> reset");
+			}
 		}
 		else if(e.getSource() == history_button)
 		{
-			
+			if(Debug_Controller.enabled())
+			{
+				System.out.println("Clicked -> history");
+			}
 		}
 		else
 		{

@@ -71,9 +71,10 @@ public class SudokuGrid {
         //initialize rows and columns array
         this.rows_array = new int[max][max];
         this.rows_array = PuzzleGenerator.init(0);
-        
+
+    	
         //initialize temp array
-        this.temp_array = new String[max][max];
+        SudokuGrid.temp_array = new String[max][max];
         
         //initialize squares array
         this.squares_array = new int[max][max];
@@ -231,7 +232,6 @@ public class SudokuGrid {
                     fields[index] = field;
                     //text = "1";
                     text = String.valueOf(current_val);
-                    System.out.println(text);
                     
                     //empty squares marked with 0
                     if(current_val == 0) {

@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 import javax.swing.JButton;
 
+import Game.SudokuSolver;
 import SudokuGenerator.Debug_Controller;
 import SudokuGenerator.SudokuGrid;
 
@@ -30,12 +31,14 @@ public class MenuButtonsListener implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == solve_button)
 		{
+			SudokuSolver sl = new SudokuSolver();
+			int[][] squares_array = sl.convert_array(SudokuGrid.temp_array);
+			int[][] rows = sl.SquaresToRows(squares_array);
 			if(Debug_Controller.enabled())
 			{
 				System.out.println("Clicked -> solve");
 			}
-			
-			//System.out.println(Arrays.deepToString(SudokuGrid.temp_array));
+			System.err.println("plz ->" + sl.checkSudokuStatus(rows));
 		}
 		else if(e.getSource() == newGame_button)
 		{

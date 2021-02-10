@@ -2,6 +2,7 @@ package Game;
 
 import javax.swing.JOptionPane;
 
+import Metrics.History;
 import SudokuGenerator.PuzzleGenerator;
 import SudokuGenerator.SudokuGrid;
 
@@ -21,6 +22,8 @@ public class GameController {
 	 * @param hidden_pieces -> number of hidden values on puzzle
 	 */
 	public static void NewGame() {
+		
+		History.writeNewGame();
 		
 		int hidden = 0;
 		//select difficulty

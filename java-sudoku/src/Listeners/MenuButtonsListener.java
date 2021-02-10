@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 
 import Game.GameController;
 import Game.SudokuSolver;
+import Metrics.History;
 import SudokuGenerator.Debug_Controller;
 import SudokuGenerator.SudokuGrid;
 
@@ -42,6 +43,8 @@ public class MenuButtonsListener implements ActionListener {
 			boolean is_correct = sl.checkSudokuStatus(rows);
 
 			if (is_correct) {
+				History.writeVictory();
+				
 				int res = JOptionPane.showOptionDialog(new JFrame(), "Good job! You solved it! \n\nNew Game?",
 						"S U D O K U", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
 						new Object[] { "Yes", "No" }, JOptionPane.YES_OPTION);
@@ -58,6 +61,7 @@ public class MenuButtonsListener implements ActionListener {
 			}
 			else
 			{
+				History.writeDefeat();
 				int res = JOptionPane.showOptionDialog(new JFrame(), "Sorry but,You failed! \n\n New Game?",
 						"S U D O K U", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE, null,
 						new Object[] { "Yes", "No" }, JOptionPane.YES_OPTION);

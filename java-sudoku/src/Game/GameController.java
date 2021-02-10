@@ -1,6 +1,5 @@
 package Game;
 
-import SudokuGenerator.PuzzleGenerator;
 import SudokuGenerator.SudokuGrid;
 
 public class GameController {

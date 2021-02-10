@@ -1,6 +1,4 @@
-package SudokuGenerator;
-
-import java.lang.*; 
+package SudokuGenerator; 
   
 public class PuzzleGenerator 
 { 
@@ -245,12 +243,18 @@ public class PuzzleGenerator
     	return to_return;
     }
   
-    public static int[][] init()
+    public static int[][] init(int numbers_to_hide)
     {
-        int N = 9, K = 20; 
+        int N = 9, K = numbers_to_hide; 
         PuzzleGenerator puzzleGenerator = new PuzzleGenerator(N, K); 
         puzzleGenerator.fillValues(); 
-        puzzleGenerator.printSudoku(); 
+        
+        if(Debug_Controller.enabled())
+        {
+        	puzzleGenerator.printSudoku(); 
+        }
+       
+        
         return mat;
     }
     

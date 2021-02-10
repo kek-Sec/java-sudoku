@@ -2,10 +2,12 @@ package Listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 import javax.swing.JButton;
 
 import SudokuGenerator.Debug_Controller;
+import SudokuGenerator.SudokuGrid;
 
 public class MenuButtonsListener implements ActionListener{
 	
@@ -32,6 +34,8 @@ public class MenuButtonsListener implements ActionListener{
 			{
 				System.out.println("Clicked -> solve");
 			}
+			
+			//System.out.println(Arrays.deepToString(SudokuGrid.temp_array));
 		}
 		else if(e.getSource() == newGame_button)
 		{

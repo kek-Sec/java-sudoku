@@ -8,6 +8,10 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.Arrays;
 
 import javax.swing.JButton;
@@ -23,6 +27,9 @@ import javax.swing.border.LineBorder;
 import Listeners.MenuButtonsListener;
 
 public class SudokuGrid {
+	
+	//temporary array for holding JTextFields content
+	public static String[][] temp_array;
 	
 	//row array
 	public int[][] rows_array;
@@ -62,13 +69,15 @@ public class SudokuGrid {
        
         //initialize rows and columns array
         this.rows_array = new int[max][max];
-        this.rows_array = PuzzleGenerator.init();
+        this.rows_array = PuzzleGenerator.init(15);
+        
+        //initialize temp array
+        this.temp_array = new String[max][max];
         
         //initialize squares array
         this.squares_array = new int[max][max];
         this.squares_array = PuzzleGenerator.createSquaresArray();
         
-        System.out.println(Arrays.deepToString(this.squares_array));
 
         //invoke swing runnable
     	EventQueue.invokeLater(new Runnable() {
@@ -196,13 +205,10 @@ public class SudokuGrid {
         public int ROWS = inner_rows;
         public int COLUMNS = inner_cols;
         public String text;
-        private int square_counter;
         
         public SubBoard(int indx) {
 
         	
-        	//initialize square counter
-        	square_counter = 0;
         	
             setLayout(new GridLayout(ROWS, COLUMNS, 2, 2));
             fields = new JTextField[ROWS * COLUMNS];
@@ -213,19 +219,42 @@ public class SudokuGrid {
                     int index = (row * COLUMNS) + col;
                     
                     JTextField field = new JTextField(4);
+                   
                     field.setHorizontalAlignment(JTextField.CENTER);
                     field.setFont(font1);
                     
+                    int current_val = squares_array[indx][index];
                     
+                    temp_array[indx][index] = String.valueOf(current_val);
                     
                     fields[index] = field;
                     //text = "1";
-                    text = String.valueOf(squares_array[indx][index]);
+                    text = String.valueOf(current_val);
+                    System.out.println(text);
                     
-                    
+                    //empty squares marked with 0
+                    if(current_val == 0) {
+                    	text = " ";
+                    }
                     field.setText(text);
 //                    field.setText(Integer.toString(index));
                     add(field);
+                    
+                    //listen to focus event
+                    field.addFocusListener(new FocusListener() {
+
+						@Override
+						public void focusGained(FocusEvent e) {
+							temp_array[indx][index] = ((JTextField) e.getSource()).getText();
+							
+						}
+
+						@Override
+						public void focusLost(FocusEvent e) {
+							temp_array[indx][index] = ((JTextField) e.getSource()).getText();
+							
+						}
+                   });
                 }
             }
         }

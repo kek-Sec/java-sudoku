@@ -24,12 +24,13 @@ public class MenuButtonsListener implements ActionListener {
   JButton history_button;
 
   //constructor
-  public MenuButtonsListener(JButton solve, JButton newGame, JButton hint,JButton history) {
+  public MenuButtonsListener(JButton solve, JButton newGame, JButton hint, JButton history) {
 
     //initialize button references
     solve_button = solve;
     newGame_button = newGame;
     hint_button = hint;
+
     history_button = history;
   }
 
@@ -100,10 +101,16 @@ public class MenuButtonsListener implements ActionListener {
         System.out.println("Clicked -> new Game");
       }
     } else if (e.getSource() == hint_button) {
+    	
+    	int res = JOptionPane.showOptionDialog(new JFrame(), "I believe in you!", "S U D O K U", JOptionPane.INFORMATION_MESSAGE, JOptionPane.QUESTION_MESSAGE, null, new Object[] {
+    	          "Thanks"
+    	        },
+    	        JOptionPane.YES_OPTION);
+    	
       if (Debug_Controller.enabled()) {
         System.out.println("Clicked -> hint");
       }
-    else if (e.getSource() == history_button) {
+    } else if (e.getSource() == history_button) {
       File local = new File("./history.sdk");
       try {
         //Doesn't seem to be working on linux while it works on win 10.
@@ -119,5 +126,5 @@ public class MenuButtonsListener implements ActionListener {
       return;
     }
   }
-}
+
 }

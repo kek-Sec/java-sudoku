@@ -43,7 +43,7 @@ public class GameController {
 			sk_array[counter - 1].is_Visible = false;
 		}
 		PuzzleGenerator.init(hidden);
-		sk_array[counter++] = new SudokuGrid(3, 3);
+		sk_array[counter++] = new SudokuGrid(3, 3, 3, 3);
 
 	}
 

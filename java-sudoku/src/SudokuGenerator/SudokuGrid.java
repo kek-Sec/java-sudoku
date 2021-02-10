@@ -8,8 +8,11 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,6 +24,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import Game.SudokuSolver;
 import Listeners.MenuButtonsListener;
 
 public class SudokuGrid {
@@ -53,14 +57,14 @@ public class SudokuGrid {
   int inner_rows,
   inner_cols;
 
-  //Attempt to make window invisible , doesn't seem to be working
   public boolean is_Visible = true;
 
-  //constructor
-  public SudokuGrid(int inner_rows, int inner_cols) {
+  public SudokuGrid(int horizontal_squares, int inner_rows, int vertical_squares, int inner_cols) {
 
     // set base variables
     // needed to construct grid
+    this.horizontal_squares = horizontal_squares;
+    this.vertical_squares = vertical_squares;
     this.inner_rows = inner_rows;
     this.inner_cols = inner_cols;
 
@@ -72,18 +76,15 @@ public class SudokuGrid {
     this.rows_array = PuzzleGenerator.getRowsArray();
 
     // initialize temp array
-    //is a string because JTextField holds Strings
     SudokuGrid.temp_array = new String[max][max];
 
     // initialize squares array
-    // See how squares are stored @ PuzzleGenerator.java
     this.squares_array = new int[max][max];
     this.squares_array = PuzzleGenerator.createSquaresArray();
 
     // invoke swing runnable
     EventQueue.invokeLater(new Runnable() {@Override
       public void run() {
-
         // try to set default look and feel
         try {
           UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -164,29 +165,24 @@ public class SudokuGrid {
     public int COLUMNS = vertical_squares;
 
     public SudokuBoard() {
-
-      //set boarder to visually split the sub boards
+    	
       setBorder(new EmptyBorder(4, 4, 4, 4));
-
-      //initialize subBoards array
       subBoards = new SubBoard[ROWS * COLUMNS];
-
       setLayout(new GridLayout(ROWS, COLUMNS, 2, 2));
-
-      //Start SubBoard generation
       for (int row = 0; row < ROWS; row++) {
         for (int col = 0; col < COLUMNS; col++) {
           int index = (row * ROWS) + col;
 
           SubBoard board = new SubBoard(index);
 
-          //debug 
+          
+          //debug
           if (Debug_Controller.enabled()) {
             System.out.println("row -> " + row + " col -> " + col);
             System.out.println("generating board -> " + index);
           }
 
-          //set board color and width
+          //important to make it aesthetic
           board.setBorder(new CompoundBorder(new LineBorder(Color.GRAY, 3), new EmptyBorder(4, 4, 4, 4)));
           subBoards[index] = board;
           add(board);
@@ -198,7 +194,6 @@ public class SudokuGrid {
   public class SubBoard extends JPanel {
 
     // inner board panel
-    // Most important component
     public int ROWS = inner_rows;
     public int COLUMNS = inner_cols;
     public String text;
@@ -211,23 +206,21 @@ public class SudokuGrid {
       for (int row = 0; row < ROWS; row++) {
         for (int col = 0; col < COLUMNS; col++) {
 
-          //get current index inside square , see PuzzleGenerator.java
           int index = (row * COLUMNS) + col;
 
-          //initialize Jtextfield
+          //initialize a textfield
           JTextField field = new JTextField(4);
 
           //set field properties
           field.setHorizontalAlignment(JTextField.CENTER);
           field.setFont(font1);
 
-          //fetch the value that needs to go in that square
+          //get current value from square array
           int current_val = squares_array[indx][index];
 
-          //add to temp_array as well so we can monitor new input
+          //add value to temp array
           temp_array[indx][index] = String.valueOf(current_val);
 
-          //set actual text on field
           fields[index] = field;
           text = String.valueOf(current_val);
 
@@ -239,7 +232,7 @@ public class SudokuGrid {
           add(field);
 
           // listen to focus event
-          //update temp square array.
+          // update temp array
           field.addFocusListener(new FocusListener() {
 
             @Override

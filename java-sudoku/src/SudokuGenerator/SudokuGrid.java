@@ -167,9 +167,9 @@ public class SudokuGrid {
                 for (int col = 0; col < COLUMNS; col++) {
                     int index = (row * ROWS) + col;
                     SubBoard board = new SubBoard(index);
-                    GeneratorUtilities.Print2dArray(squares_array);
+          
 
-                    System.out.println("generating board -> " + index);
+                    //System.out.println("generating board -> " + index);
                     
                     board.setBorder(new CompoundBorder(new LineBorder(Color.GRAY, 3), new EmptyBorder(4, 4, 4, 4)));
                     subBoards[index] = board;
@@ -213,11 +213,11 @@ public class SudokuGrid {
                     
                     fields[index] = field;
                     //text = "1";
-                    //text = String.valueOf(random_numbers[index]);
-                    text = String.valueOf(index);
+                    text = String.valueOf(random_numbers[index]);
+                    //text = String.valueOf(index);
                     
                     //add data to squares_array
-                    squares_array[indx][square_counter] = index;
+                    squares_array[indx][square_counter] = random_numbers[index];
                     square_counter++;
                     
                     random_numbers[index] = 0;

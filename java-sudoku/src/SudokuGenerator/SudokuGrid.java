@@ -5,15 +5,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -25,234 +21,241 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import Game.SudokuSolver;
 import Listeners.MenuButtonsListener;
 
 public class SudokuGrid {
 
-	// temporary array for holding JTextFields content
-	public static String[][] temp_array;
+  // temporary array for holding JTextFields content
+  public static String[][] temp_array;
 
-	// row array
-	public int[][] rows_array;
+  // row array
+  public int[][] rows_array;
 
-	// array containing each square
-	public int[][] squares_array;
+  // array containing each square
+  public int[][] squares_array;
 
-	// Array of subBoards - contains individual arrays of JTextField
-	public SubBoard[] subBoards;
-	// Menu buttons action listener
-	public MenuButtonsListener mbl;
+  // Array of subBoards - contains individual arrays of JTextField
+  public SubBoard[] subBoards;
+  // Menu buttons action listener
+  public MenuButtonsListener mbl;
 
-	// each field is one square in the puzzle
-	public JTextField[] fields;
+  // each field is one square in the puzzle
+  public JTextField[] fields;
 
-	// set font to be used inside squares
-	Font font1 = new Font("SansSerif", Font.BOLD, 23);
+  // set font to be used inside squares
+  Font font1 = new Font("SansSerif", Font.BOLD, 23);
 
-	// number of squares
-	int horizontal_squares, vertical_squares;
+  // number of squares
+  int horizontal_squares,
+  vertical_squares;
 
-	// number of rows and columns
-	int inner_rows, inner_cols;
+  // number of rows and columns
+  int inner_rows,
+  inner_cols;
 
-	public boolean is_Visible = true;
-	
-	public SudokuGrid(int horizontal_squares, int inner_rows, int vertical_squares, int inner_cols) {
+  //Attempt to make window invisible , doesn't seem to be working
+  public boolean is_Visible = true;
 
-		// set base variables
-		// needed to construct grid
-		this.horizontal_squares = horizontal_squares;
-		this.vertical_squares = vertical_squares;
-		this.inner_rows = inner_rows;
-		this.inner_cols = inner_cols;
+  //constructor
+  public SudokuGrid(int inner_rows, int inner_cols) {
 
-		// max index
-		int max = inner_rows * inner_cols;
+    // set base variables
+    // needed to construct grid
+    this.inner_rows = inner_rows;
+    this.inner_cols = inner_cols;
 
-		// initialize rows and columns array
-		this.rows_array = new int[max][max];
-		this.rows_array = PuzzleGenerator.getRowsArray();
+    // max index
+    int max = inner_rows * inner_cols;
 
-		// initialize temp array
-		SudokuGrid.temp_array = new String[max][max];
+    // initialize rows and columns array
+    this.rows_array = new int[max][max];
+    this.rows_array = PuzzleGenerator.getRowsArray();
 
-		// initialize squares array
-		this.squares_array = new int[max][max];
-		this.squares_array = PuzzleGenerator.createSquaresArray();
+    // initialize temp array
+    //is a string because JTextField holds Strings
+    SudokuGrid.temp_array = new String[max][max];
 
-		// invoke swing runnable
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				// try to set default look and feel
-				try {
-					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-				} catch (ClassNotFoundException ex) {
-				} catch (InstantiationException ex) {
-				} catch (IllegalAccessException ex) {
-				} catch (UnsupportedLookAndFeelException ex) {
-				}
-				// create base frame
-				JFrame frame = new JFrame();
-				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				frame.setLayout(new BorderLayout());
+    // initialize squares array
+    // See how squares are stored @ PuzzleGenerator.java
+    this.squares_array = new int[max][max];
+    this.squares_array = PuzzleGenerator.createSquaresArray();
 
-				// add game board
-				frame.add(new SudokuBoard());
+    // invoke swing runnable
+    EventQueue.invokeLater(new Runnable() {@Override
+      public void run() {
 
-				// add menu grid
-				frame.add(new MenuPane(), BorderLayout.AFTER_LINE_ENDS);
+        // try to set default look and feel
+        try {
+          UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch(ClassNotFoundException ex) {} catch(InstantiationException ex) {} catch(IllegalAccessException ex) {} catch(UnsupportedLookAndFeelException ex) {}
+        // create base frame
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
 
-				// pack components on frame
-				frame.pack();
+        // add game board
+        frame.add(new SudokuBoard());
 
-				// frame properties
-				frame.setMinimumSize(new Dimension(800, 600));
-				frame.setTitle("S U D O K U");
-				frame.setLocationRelativeTo(null);
+        // add menu grid
+        frame.add(new MenuPane(), BorderLayout.AFTER_LINE_ENDS);
 
-				// show frame
-				frame.setVisible(is_Visible);
+        // pack components on frame
+        frame.pack();
 
-			}
-		});
-	}
-	public class MenuPane extends JPanel {
+        // frame properties
+        frame.setMinimumSize(new Dimension(800, 600));
+        frame.setTitle("S U D O K U");
+        frame.setLocationRelativeTo(null);
 
-		// options menu
+        // show frame
+        frame.setVisible(is_Visible);
 
-		public MenuPane() {
-			setBorder(new EmptyBorder(5, 5, 5, 5));
-			setLayout(new GridBagLayout());
+      }
+    });
+  }
 
-			// gridbagconstraints is the easiest way to stack buttons in swing
+  public class MenuPane extends JPanel {
 
-			GridBagConstraints gbc = new GridBagConstraints();
+    // options menu
+    public MenuPane() {
+      setBorder(new EmptyBorder(5, 5, 5, 5));
+      setLayout(new GridBagLayout());
 
-			// GBC properties
-			gbc.gridx = 0;
-			gbc.gridy = 1;
-			gbc.weightx = 1;
-			gbc.fill = GridBagConstraints.HORIZONTAL;
+      // gridbagconstraints is the easiest way to stack buttons in swing
+      GridBagConstraints gbc = new GridBagConstraints();
 
-			// create buttons
-			JButton solve_button = new JButton("Solve");
-			JButton newGame_button = new JButton("New Game");
-			JButton hint_button = new JButton("Hint");
-			JButton reset_button = new JButton("Reset");
-			JButton history_button = new JButton("History");
+      // GBC properties
+      gbc.gridx = 0;
+      gbc.gridy = 1;
+      gbc.weightx = 1;
+      gbc.fill = GridBagConstraints.HORIZONTAL;
 
-			// initialize menu button listener
-			mbl = new MenuButtonsListener(solve_button, newGame_button, hint_button, reset_button, history_button);
+      // create buttons
+      JButton solve_button = new JButton("Solve");
+      JButton newGame_button = new JButton("New Game");
+      JButton hint_button = new JButton("Hint");
+      JButton history_button = new JButton("History");
 
-			// Add event listeners
-			solve_button.addActionListener(mbl);
-			newGame_button.addActionListener(mbl);
-			hint_button.addActionListener(mbl);
-			reset_button.addActionListener(mbl);
-			history_button.addActionListener(mbl);
+      // initialize menu button listener
+      mbl = new MenuButtonsListener(solve_button, newGame_button, hint_button, history_button);
 
-			// adding buttons to menu on the y axis
-			add(solve_button, gbc);
-			gbc.gridy++;
-			add(newGame_button, gbc);
-			gbc.gridy++;
-			add(hint_button, gbc);
-			gbc.gridy++;
-			add(reset_button, gbc);
-			gbc.gridy++;
-			add(history_button, gbc);
-		}
-	}
+      // Add event listeners
+      solve_button.addActionListener(mbl);
+      newGame_button.addActionListener(mbl);
+      hint_button.addActionListener(mbl);
+      history_button.addActionListener(mbl);
 
-	@SuppressWarnings("serial")
-	public class SudokuBoard extends JPanel {
+      // adding buttons to menu on the y axis
+      add(solve_button, gbc);
+      gbc.gridy++;
+      add(newGame_button, gbc);
+      gbc.gridy++;
+      add(hint_button, gbc);
+      gbc.gridy++;
+      add(history_button, gbc);
+    }
+  }
 
-		// outer board panel
+  @SuppressWarnings("serial")
+  public class SudokuBoard extends JPanel {
 
-		public int ROWS = horizontal_squares;
-		public int COLUMNS = vertical_squares;
+    // outer board panel
+    public int ROWS = horizontal_squares;
+    public int COLUMNS = vertical_squares;
 
-		public SudokuBoard() {
-			setBorder(new EmptyBorder(4, 4, 4, 4));
-			subBoards = new SubBoard[ROWS * COLUMNS];
-			setLayout(new GridLayout(ROWS, COLUMNS, 2, 2));
-			for (int row = 0; row < ROWS; row++) {
-				for (int col = 0; col < COLUMNS; col++) {
-					int index = (row * ROWS) + col;
+    public SudokuBoard() {
 
-					SubBoard board = new SubBoard(index);
+      //set boarder to visually split the sub boards
+      setBorder(new EmptyBorder(4, 4, 4, 4));
 
-					if (Debug_Controller.enabled()) {
-						System.out.println("row -> " + row + " col -> " + col);
-						System.out.println("generating board -> " + index);
-					}
+      //initialize subBoards array
+      subBoards = new SubBoard[ROWS * COLUMNS];
 
-					board.setBorder(new CompoundBorder(new LineBorder(Color.GRAY, 3), new EmptyBorder(4, 4, 4, 4)));
-					subBoards[index] = board;
-					add(board);
-				}
-			}
-		}
-	}
+      setLayout(new GridLayout(ROWS, COLUMNS, 2, 2));
 
-	public class SubBoard extends JPanel {
+      //Start SubBoard generation
+      for (int row = 0; row < ROWS; row++) {
+        for (int col = 0; col < COLUMNS; col++) {
+          int index = (row * ROWS) + col;
 
-		// inner board panel
+          SubBoard board = new SubBoard(index);
 
-		public int ROWS = inner_rows;
-		public int COLUMNS = inner_cols;
-		public String text;
+          //debug 
+          if (Debug_Controller.enabled()) {
+            System.out.println("row -> " + row + " col -> " + col);
+            System.out.println("generating board -> " + index);
+          }
 
-		public SubBoard(int indx) {
+          //set board color and width
+          board.setBorder(new CompoundBorder(new LineBorder(Color.GRAY, 3), new EmptyBorder(4, 4, 4, 4)));
+          subBoards[index] = board;
+          add(board);
+        }
+      }
+    }
+  }
 
-			setLayout(new GridLayout(ROWS, COLUMNS, 2, 2));
-			fields = new JTextField[ROWS * COLUMNS];
+  public class SubBoard extends JPanel {
 
-			for (int row = 0; row < ROWS; row++) {
-				for (int col = 0; col < COLUMNS; col++) {
+    // inner board panel
+    // Most important component
+    public int ROWS = inner_rows;
+    public int COLUMNS = inner_cols;
+    public String text;
 
-					int index = (row * COLUMNS) + col;
+    public SubBoard(int indx) {
 
-					JTextField field = new JTextField(4);
+      setLayout(new GridLayout(ROWS, COLUMNS, 2, 2));
+      fields = new JTextField[ROWS * COLUMNS];
 
-					field.setHorizontalAlignment(JTextField.CENTER);
-					field.setFont(font1);
+      for (int row = 0; row < ROWS; row++) {
+        for (int col = 0; col < COLUMNS; col++) {
 
-					int current_val = squares_array[indx][index];
+          //get current index inside square , see PuzzleGenerator.java
+          int index = (row * COLUMNS) + col;
 
-					temp_array[indx][index] = String.valueOf(current_val);
+          //initialize Jtextfield
+          JTextField field = new JTextField(4);
 
-					fields[index] = field;
-					// text = "1";
-					text = String.valueOf(current_val);
+          //set field properties
+          field.setHorizontalAlignment(JTextField.CENTER);
+          field.setFont(font1);
 
-					// empty squares marked with 0
-					if (current_val == 0) {
-						text = " ";
-					}
-					field.setText(text);
-//                    field.setText(Integer.toString(index));
-					add(field);
+          //fetch the value that needs to go in that square
+          int current_val = squares_array[indx][index];
 
-					// listen to focus event
-					field.addFocusListener(new FocusListener() {
+          //add to temp_array as well so we can monitor new input
+          temp_array[indx][index] = String.valueOf(current_val);
 
-						@Override
-						public void focusGained(FocusEvent e) {
-							temp_array[indx][index] = ((JTextField) e.getSource()).getText();
+          //set actual text on field
+          fields[index] = field;
+          text = String.valueOf(current_val);
 
-						}
+          // empty squares marked with 0
+          if (current_val == 0) {
+            text = " ";
+          }
+          field.setText(text);
+          add(field);
 
-						@Override
-						public void focusLost(FocusEvent e) {
-							temp_array[indx][index] = ((JTextField) e.getSource()).getText();
+          // listen to focus event
+          //update temp square array.
+          field.addFocusListener(new FocusListener() {
 
-						}
-					});
-				}
-			}
-		}
-	}
+            @Override
+            public void focusGained(FocusEvent e) {
+              temp_array[indx][index] = ((JTextField) e.getSource()).getText();
+
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+              temp_array[indx][index] = ((JTextField) e.getSource()).getText();
+
+            }
+          });
+        }
+      }
+    }
+  }
 }

@@ -164,11 +164,10 @@ public class PuzzleGenerator {
 		System.out.println();
 	}
 
-	public static int[][] getRowsArray()
-	{
+	public static int[][] getRowsArray() {
 		return mat;
 	}
-	
+
 	public static int[][] createSquaresArray() {
 		int[][] to_return = new int[N][N];
 		int current_square = 0;

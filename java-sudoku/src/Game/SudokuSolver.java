@@ -68,7 +68,10 @@ public class SudokuSolver {
 	 * Convert squares[][] to rows[][]
 	 * 
 	 * @param squares_array -> array of individual squares squares are stored like:
-	 * --------------------------------- |0|1|2| |3|4|5| |6|7|8|
+	 * ---------------------------------
+	 *  |0|1|2| 
+	 *  |3|4|5| 
+	 *  |6|7|8|
 	 * 
 	 */
   public int[][] SquaresToRows(int[][] squares_array) {

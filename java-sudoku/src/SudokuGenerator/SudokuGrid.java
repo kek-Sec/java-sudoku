@@ -166,6 +166,7 @@ public class SudokuGrid {
             for (int row = 0; row < ROWS; row++) {
                 for (int col = 0; col < COLUMNS; col++) {
                     int index = (row * ROWS) + col;
+                    System.out.println("row -> " + row + " col -> " + col);
                     SubBoard board = new SubBoard(index);
           
 
@@ -194,9 +195,6 @@ public class SudokuGrid {
         	//initialize square counter
         	square_counter = 0;
         	
-        	//get unique random numbers
-        	random_numbers = GeneratorUtilities.getUniqueRandomNumbers(10, 9);
-        	
             setLayout(new GridLayout(ROWS, COLUMNS, 2, 2));
             fields = new JTextField[ROWS * COLUMNS];
             
@@ -213,14 +211,12 @@ public class SudokuGrid {
                     
                     fields[index] = field;
                     //text = "1";
-                    text = String.valueOf(random_numbers[index]);
-                    //text = String.valueOf(index);
+                    text = String.valueOf(index);
                     
                     //add data to squares_array
-                    squares_array[indx][square_counter] = random_numbers[index];
+                    squares_array[indx][square_counter] = index;
                     square_counter++;
                     
-                    random_numbers[index] = 0;
                     field.setText(text);
 //                    field.setText(Integer.toString(index));
                     add(field);

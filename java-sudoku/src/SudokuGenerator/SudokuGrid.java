@@ -24,6 +24,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import Game.SudokuSolver;
 import Listeners.MenuButtonsListener;
 
 public class SudokuGrid {
@@ -69,7 +70,7 @@ public class SudokuGrid {
        
         //initialize rows and columns array
         this.rows_array = new int[max][max];
-        this.rows_array = PuzzleGenerator.init(15);
+        this.rows_array = PuzzleGenerator.init(0);
         
         //initialize temp array
         this.temp_array = new String[max][max];

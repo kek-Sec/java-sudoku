@@ -1,4 +1,4 @@
-package Game;
+package Model;
 
 import java.util.Arrays;
 

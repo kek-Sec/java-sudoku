@@ -9,7 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import Game.SudokuSolver;
+import Model.SudokuSolver;
 import View.SudokuGrid;
 
 public class MenuButtonsListener implements ActionListener {
